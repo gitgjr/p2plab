@@ -10,6 +10,8 @@
     "@libp2p/tcp": "^6.1.5",
     "@libp2p/websockets": "^5.0.8",
     "express": "^4.18.2",
-    "libp2p": "^0.43.4"
+    "it-pipe": "^3.0.1",
+    "libp2p": "^0.43.4",
+    "uint8arrays": "^4.0.3"
   }
 }

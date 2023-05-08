@@ -1,4 +1,7 @@
 import * as fs from "fs";
+import {pipe} from "it-pipe";
+import utils from "./Utils/utils.js";
+// import {stream} from "stream";
 function handleHLSStream(){
 
 }
@@ -16,4 +19,19 @@ function clientReceiveChunk(data){
     })
 }
 
-export {clientReceiveChunk}
+function handleTextStream({stream}){
+    pipe(
+        stream,
+        source => (async function () {
+            for await (const msg of source) {
+                console.log(utils.uint8ArrayToString(msg.subarray()))
+            }
+        })()
+    )
+}
+
+function handleBufferStream({stream}){
+
+}
+
+export {clientReceiveChunk,handleTextStream}

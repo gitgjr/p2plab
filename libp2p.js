@@ -11,6 +11,8 @@ import {bootstrap} from "@libp2p/bootstrap";
 import PeerId from 'peer-id'
 
 // creat different p2p nodes
+
+//Known bootstrap nodes
 const bootstrapMultiaddrs = [
     '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
     '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN'

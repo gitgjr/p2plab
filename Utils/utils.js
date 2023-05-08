@@ -1,3 +1,4 @@
+
 function getTime(){
     let date_ob = new Date();
 
@@ -71,7 +72,46 @@ function deleteFileExtension(inputFileName){
     return inputFileName
 }
 
+function getMultiaddr(inputAddr){
+    //check the type of inputAddr
+    // console.log("inputAddr:",inputAddr.toString(),typeof inputAddr)
+    const pureAddr=inputAddr.toString().split("/",4).join("/")
+    //check the type of inputAddr
+    // console.log("pureAddr:",pureAddr)
+    let result=[]
+    result.push(pureAddr)
+    return result
+}// no use
+
+function uint8ArrayToString(fileData){
+    var dataString = "";
+    for (var i = 0; i < fileData.length; i++) {
+        dataString += String.fromCharCode(fileData[i]);
+    }
+
+    return dataString
+}
 
 
-export default {getTime,sleep,pingTest,printTimeInterval,deleteExtension: deleteFileExtension}
+function stringToUint8Array(str){
+    var arr = [];
+    for (var i = 0, j = str.length; i < j; ++i) {
+        arr.push(str.charCodeAt(i));
+    }
+
+    var tmpUint8Array = new Uint8Array(arr);
+    return tmpUint8Array
+}
+
+
+export default {
+    getTime,
+    sleep,
+    pingTest,
+    printTimeInterval,
+    deleteExtension: deleteFileExtension,
+    getMultiaddr,
+    uint8ArrayToString,
+    stringToUint8Array
+}
 
