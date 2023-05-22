@@ -20,6 +20,7 @@ function clientReceiveChunk(data){
 }
 
 function handleTextStream({stream}){
+    // stream.pipe(console.log("stream:",stream))
     pipe(
         stream,
         source => (async function () {
@@ -30,7 +31,12 @@ function handleTextStream({stream}){
     )
 }
 
-function handleBufferStream({stream}){
+function handleBufferStream({stream},filePath){
+    // Create a readable stream from the file
+    const fileStream = fs.createReadStream(filePath);
+
+// Create a buffer to store the file data
+    const chunks = []
 
 }
 

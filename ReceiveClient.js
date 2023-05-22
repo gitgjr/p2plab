@@ -1,9 +1,7 @@
-
 import * as Node from "./libp2p.js"
 import * as handler from "./handler.js"
 import utils from "./Utils/utils.js";
 import {pipe} from "it-pipe";
-import {sayHello} from "./dialProtocol.js";
 
 const filePath = './data'
 async function start() {
@@ -19,7 +17,7 @@ async function start() {
         console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
     })
 
-
+    let peers
 
     node.connectionManager.addEventListener('peer:connect', (evt) => {
         const peer= evt.detail
@@ -36,17 +34,40 @@ async function start() {
         //check if peer is in the peerStore
         // node.peerStore.get(peerId).then((peer)=>{console.log("peer:",peer)})
         // node.peerStore.all().then((peers)=>{console.log("peers:",peers)})
+        //TODO send a message to each peers
+        peers=node.getPeers()
 
-        //send a message to each peers
-        sayHello(node)
-
+        // ### DIAL ###
+        // for (let i in peers){
+        //     // await node.ping(peers[i]).then((time)=>{
+        //     //     console.log("ping time:",time)
+        //     // })
+        //
+        //
+        //     //TODO solve the ping bug:Maybe two nodes ping each other at the same time
+        //     //TODO divide listener and dialer
+        //     node.dialProtocol(peers[i],['/chat/1.0.0']).then((stream)=>{
+        //         pipe(
+        //             [utils.stringToUint8Array('my own protocol, wow!')],
+        //             stream
+        //         )
+        //     })
+        //     // node.dialProtocol(peers[i],[''])
+        // }
     })
 
     node.connectionManager.addEventListener('peer:disconnect', (evt) => {
         console.log('Disconnected from %s', evt.detail.id.toString())
     })
 
-
+async function pingPeers(peers){
+    for(let i in peers){
+        console.log("pinging:",peers[i])
+        await node.ping(peers[i]).then((time)=>{
+            console.log("ping time:",time)
+        })
+    }
+}
 
 
 
@@ -76,7 +97,6 @@ async function start() {
     // }
 
 }
-
 
 start()
 

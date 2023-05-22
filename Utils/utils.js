@@ -32,34 +32,6 @@ function getTime(){
     // console.log(hours + ":" + minutes);
 }
 
-function typeJudge(type){
-
-}
-
-function stationSearch(){
-
-}
-
-function sleep(delay) {
-    let start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
-}
-
-async function pingTest(socket){
-    let avePing=0
-    for(let i=0;i<10;i++){
-        // sleep(1000) //all thread are stoped
-        await socket.emit('ping',function (){
-            const start=Date.now()
-            const duration = Date.now() - start;
-            console.log(getTime(),":",duration);
-            avePing=duration+avePing
-        })
-    }
-    avePing=avePing/10
-    return avePing
-}
-
 
 function printTimeInterval(startTime){
     // console.log(getTime(),"The time interval is",Math.floor((Date.now()-startTime)/1000),"ms")
@@ -104,10 +76,9 @@ function stringToUint8Array(str){
 }
 
 
+
 export default {
     getTime,
-    sleep,
-    pingTest,
     printTimeInterval,
     deleteExtension: deleteFileExtension,
     getMultiaddr,
