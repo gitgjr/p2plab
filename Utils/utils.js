@@ -1,3 +1,4 @@
+import fs from "fs";
 
 function getTime(){
     let date_ob = new Date();
@@ -75,6 +76,32 @@ function stringToUint8Array(str){
     return tmpUint8Array
 }
 
+function pathHandler(dir){
+    let files=[]
+    if(isString(dir)){
+        if(dir.isDirectory){
+            fs.readdir(dir, (err, fileNames) => {
+                if (err) {
+                    console.log(`Error reading folder: ${folderPath}`);
+                    console.log(err);
+                }else {
+                    files=fileNames
+                }
+            })
+        }else{
+            files.push(dir)
+        }
+        return files
+    }else{
+        throw new Error("dir is not a string")
+    }
+}
+
+function isString(value) {
+    return typeof value === "string" || value instanceof String;
+}
+
+
 
 
 export default {
@@ -83,6 +110,7 @@ export default {
     deleteExtension: deleteFileExtension,
     getMultiaddr,
     uint8ArrayToString,
-    stringToUint8Array
+    stringToUint8Array,
+    pathHandler
 }
 

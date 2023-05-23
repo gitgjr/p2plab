@@ -3,9 +3,9 @@ import * as Node from "./libp2p.js"
 import * as handler from "./handler.js"
 import utils from "./Utils/utils.js";
 import {pipe} from "it-pipe";
-import {sayHello} from "./dialProtocol.js";
+import {sayHello, sendBuffer} from "./dialProtocol.js";
 
-const filePath = './data'
+const filePath = './Data/From'
 async function start() {
     const node=await Node.createNode()
 
@@ -38,7 +38,10 @@ async function start() {
         // node.peerStore.all().then((peers)=>{console.log("peers:",peers)})
 
         //send a message to each peers
-        sayHello(node)
+        let peers=node.getPeers()
+        sayHello(node,peers)
+
+        sendBuffer(node,peers,filePath)
 
     })
 

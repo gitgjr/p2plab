@@ -3,12 +3,13 @@ import * as handler from "./handler.js"
 import utils from "./Utils/utils.js";
 import {pipe} from "it-pipe";
 
-const filePath = './data'
+const filePath = './Data/To'
 async function start() {
     const node=await Node.createNode()
 
     //handler
     await node.handle('/chat/1.0.0', handler.handleTextStream)
+    await node.handle('/stream/1.0.0', handler.handleBufferStream)
 
     //protocols of the node
     const protocols = ['/chat/1.0.0','stream/1.0.0']
@@ -17,7 +18,7 @@ async function start() {
         console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
     })
 
-    let peers
+
 
     node.connectionManager.addEventListener('peer:connect', (evt) => {
         const peer= evt.detail
@@ -31,29 +32,8 @@ async function start() {
         // node.peerStore.addressBook.add(peerId, utils.getMultiaddr(evt.detail.remoteAddr))
         node.peerStore.addressBook.add(peerId, [evt.detail.remoteAddr])
 
-        //check if peer is in the peerStore
-        // node.peerStore.get(peerId).then((peer)=>{console.log("peer:",peer)})
-        // node.peerStore.all().then((peers)=>{console.log("peers:",peers)})
-        //TODO send a message to each peers
-        peers=node.getPeers()
+        let peers=node.getPeers()
 
-        // ### DIAL ###
-        // for (let i in peers){
-        //     // await node.ping(peers[i]).then((time)=>{
-        //     //     console.log("ping time:",time)
-        //     // })
-        //
-        //
-        //     //TODO solve the ping bug:Maybe two nodes ping each other at the same time
-        //     //TODO divide listener and dialer
-        //     node.dialProtocol(peers[i],['/chat/1.0.0']).then((stream)=>{
-        //         pipe(
-        //             [utils.stringToUint8Array('my own protocol, wow!')],
-        //             stream
-        //         )
-        //     })
-        //     // node.dialProtocol(peers[i],[''])
-        // }
     })
 
     node.connectionManager.addEventListener('peer:disconnect', (evt) => {
