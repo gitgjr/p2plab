@@ -79,23 +79,27 @@ function stringToUint8Array(str){
 function pathHandler(dir){
     let files=[]
     if(isString(dir)){
-        if(dir.isDirectory){
+        if(fs.lstatSync(dir).isDirectory() ){
             fs.readdir(dir, (err, fileNames) => {
                 if (err) {
-                    console.log(`Error reading folder: ${folderPath}`);
+                    console.log(`Error reading folder: ${dir}`);
                     console.log(err);
                 }else {
-                    files=fileNames
+                    files=fileNames.slice()
+                    return files
                 }
             })
         }else{
             files.push(dir)
+            return files
         }
-        return files
+        
     }else{
         throw new Error("dir is not a string")
     }
 }
+const filePath = './Data/From/'
+console.log(pathHandler(filePath))
 
 function isString(value) {
     return typeof value === "string" || value instanceof String;

@@ -2,30 +2,37 @@ import fs from 'fs'
 import {pipe} from "it-pipe";
 import utils from "./Utils/utils.js";
 import pipeline from "stream"
+
 function sendBuffer(node,peers,folderPath){
 
     let files=utils.pathHandler(folderPath)
 
     // Create a readable stream from the file
-
-    files.forEach((file)=>{
-        node.dialProtocol(peers,['/stream/1.0.0']).then(function (stream){
-            pipe(
-                fs.createReadStream(file),
-                stream
-            )
+    //TODO which loop should be the outter loop
+    for(let i in peers){
+        files.forEach((file)=>{
+            console.log("name of file is",file)
+            node.dialProtocol(peers[i],['/stream/1.0.0']).then(function (stream){
+                pipe(
+                    fs.createReadStream(file),
+                    // stream,
+                    // fs.createWriteStream('./Data/To')
+                    process.stdout()
+                )
+            })
+            // const fileStream = fs.createReadStream(file);
+    
+            // Create a buffer to store the file data
+            // const chunks = [];
+            // fileStream.on('data', (chunk) => {
+            //     chunks.push(chunk);
+            // });
+            // fileStream.on('end', () => {
+            //     const data= Buffer.concat(chunks);
+            // })
         })
-        // const fileStream = fs.createReadStream(file);
+    }
 
-        // Create a buffer to store the file data
-        // const chunks = [];
-        // fileStream.on('data', (chunk) => {
-        //     chunks.push(chunk);
-        // });
-        // fileStream.on('end', () => {
-        //     const data= Buffer.concat(chunks);
-        // })
-    })
 }
 
 function filesToBuffer(files){
@@ -34,6 +41,11 @@ function filesToBuffer(files){
         bufferArray.push(fs.readFileSync(files[i]))
     }
     return bufferArray
+}
+function filesToStream(file,stream){
+    pipe(
+
+    )
 }
 
 function pingPeers(peers){

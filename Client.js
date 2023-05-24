@@ -5,7 +5,7 @@ import utils from "./Utils/utils.js";
 import {pipe} from "it-pipe";
 import {sayHello, sendBuffer} from "./dialProtocol.js";
 
-const filePath = './Data/From'
+const filePath = './Data/From/'
 async function start() {
     const node=await Node.createNode()
 

@@ -8,7 +8,7 @@ import {circuitRelayServer, circuitRelayTransport} from "libp2p/circuit-relay";
 import {floodsub} from "@libp2p/floodsub";
 import {pubsubPeerDiscovery} from "@libp2p/pubsub-peer-discovery";
 import {bootstrap} from "@libp2p/bootstrap";
-import PeerId from 'peer-id'
+// import PeerId from 'peer-id'
 
 // creat different p2p nodes
 

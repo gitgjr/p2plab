@@ -39,10 +39,10 @@ function handleBufferStream({stream},filePath){
         stream,
         fs.createWriteStream(filePath)
     )
-    const fileStream = fs.createReadStream(filePath);
+    // const fileStream = fs.createReadStream(filePath);
 
 // Create a buffer to store the file data
-    const chunks = []
+    // const chunks = []
 
 }
 

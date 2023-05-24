@@ -95,3 +95,6 @@ typings/
 #Data
 Data/
 
+#Mac
+.DS_Store
+
