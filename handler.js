@@ -36,8 +36,9 @@ function handleTextStream({stream}){
 function handleBufferStream({stream},filePath){
     // Create a readable stream from the file
     pipe(
-        stream,
-        fs.createWriteStream(filePath)
+        stream.source,
+        process.stdout((source))
+        // fs.createWriteStream(filePath)
     )
     // const fileStream = fs.createReadStream(filePath);
 

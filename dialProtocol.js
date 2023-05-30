@@ -15,9 +15,9 @@ function sendBuffer(node,peers,folderPath){
             node.dialProtocol(peers[i],['/stream/1.0.0']).then(function (stream){
                 pipe(
                     fs.createReadStream(file),
-                    // stream,
+                    stream.sink
                     // fs.createWriteStream('./Data/To')
-                    process.stdout()
+                    // process.stdout("abc")
                 )
             })
             // const fileStream = fs.createReadStream(file);

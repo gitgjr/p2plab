@@ -3,7 +3,7 @@ import * as handler from "./handler.js"
 import utils from "./Utils/utils.js";
 import {pipe} from "it-pipe";
 
-const filePath = './Data/To'
+const filePath = './Data/To/'
 async function start() {
     const node=await Node.createNode()
 
@@ -17,8 +17,6 @@ async function start() {
     node.addEventListener('peer:discovery', (evt) => {
         console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
     })
-
-
 
     node.connectionManager.addEventListener('peer:connect', (evt) => {
         const peer= evt.detail
