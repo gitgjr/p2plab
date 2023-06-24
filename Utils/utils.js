@@ -77,6 +77,7 @@ function stringToUint8Array(str){
 }
 
 function pathHandler(dir){
+    //return a array of names of files in a folder
     let files=[]
     if(isString(dir)){
         let stat=fs.lstatSync(dir)

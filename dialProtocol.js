@@ -1,38 +1,76 @@
 import fs from 'fs'
-import {pipe} from "it-pipe";
+import * as it from "it-pipe";
 import utils from "./Utils/utils.js";
-import pipeline from "stream"
+import { pipeline } from 'stream'
 
+const fromPath = './Data/From/'
 function sendBuffer(node,peers,folderPath){
 
-    let files=utils.pathHandler(folderPath)
+    const files=utils.pathHandler(folderPath)
 
     // Create a readable stream from the file
-    //TODO which loop should be the outter loop
-    for(let i in peers){
-        files.forEach((file)=>{
-            console.log("name of file is",file)
-            node.dialProtocol(peers[i],['/stream/1.0.0']).then(function (stream){
-                pipe(
-                    fs.createReadStream(file),
-                    stream.sink
-                    // fs.createWriteStream('./Data/To')
-                    // process.stdout("abc")
-                )
+    //TODO which loop should be the outer loop
+    //TODO transmit a lot of files
+    for (let i in peers){
+        for (let file_name of files){
+            const read_stream=fs.createReadStream(fromPath+file_name)
+            read_stream.on('data',(chunk)=>{
+                node.dialProtocol(peers[i],['/buffer/1.0.0']).then((stream)=>{
+                    it.pipe(
+                        [utils.stringToUint8Array(file_name),chunk],
+                        stream
+                    )
+                })
             })
-            // const fileStream = fs.createReadStream(file);
-    
-            // Create a buffer to store the file data
-            // const chunks = [];
-            // fileStream.on('data', (chunk) => {
-            //     chunks.push(chunk);
-            // });
-            // fileStream.on('end', () => {
-            //     const data= Buffer.concat(chunks);
-            // })
-        })
+            read_stream.on('end',()=>{  console.log("read stream end")})
+            read_stream.on('error', err => console.error(`Error reading file: ${err}`))
+        }
     }
+    // ###           well done
+    // for (let i in peers){
+    //     node.dialProtocol(peers[i],['/buffer/1.0.0']).then((stream)=>{
+    //         it.pipe(
+    //             source,
+    //             stream
+    //         )
+    //     })
+    // }
+    // ###
 
+    // for(let i in peers){
+    //     node.dialProtocol(peers[i],['/stream/1.0.0']).then(function (stream){
+    //
+    //         pipe(
+    //             [utils.stringToUint8Array('my own protocol2, wow!')],
+    //             stream
+    //         )
+    //         // pipe(
+    //         //     fs.createReadStream(file),
+    //         //     stream.sink
+    //         //     // fs.createWriteStream('./Data/To')
+    //         //     // process.stdout("abc")
+    //         // )
+    //         //
+    //         //     // const fileStream = fs.createReadStream(folderPath+file);
+    //         //     // fileStream.on('data', (chunk) => {
+    //         //     //     stream.sink(chunk)
+    //         //     // })
+    //     })
+        // files.forEach((file)=>{
+        //     console.log("name of file is",file)
+        //
+        //
+        //
+        //     // Create a buffer to store the file data
+        //     // const chunks = [];
+        //     // fileStream.on('data', (chunk) => {
+        //     //     chunks.push(chunk);
+        //     // });
+        //     // fileStream.on('end', () => {
+        //     //     const data= Buffer.concat(chunks);
+        //     // })
+        // })
+    // }
 }
 
 function filesToBuffer(files){
@@ -65,15 +103,11 @@ function sayHello(node,peers){
         })
 
         node.dialProtocol(peers[i],['/chat/1.0.0']).then((stream)=>{
-            // console.log("stream:",stream)
-            // pipeline()
-            // let msg="wow! I'm "+node.peerId.toString()
-            // msg=utils.stringToUint8Array(msg)
-            // msg.pipeline(stream)
-            pipe(
-                [utils.stringToUint8Array('my own protocol, wow!')],
+            it.pipe(
+                [utils.stringToUint8Array('my own protocol, wow!'),utils.stringToUint8Array('my own protocol, wow2!')],
                 stream
             )
+
         })
         // node.dialProtocol(peers[i],[''])
     }

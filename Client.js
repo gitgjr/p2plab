@@ -11,9 +11,10 @@ async function start() {
 
     //handler
     await node.handle('/chat/1.0.0', handler.handleTextStream)
+    await node.handle('/buffer/1.0.0', handler.handleBufferStream)
 
     //protocols of the node
-    const protocols = ['/chat/1.0.0','stream/1.0.0']
+    const protocols = ['/chat/1.0.0','/buffer/1.0.0']
 
     node.addEventListener('peer:discovery', (evt) => {
         console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
@@ -39,7 +40,7 @@ async function start() {
 
         //send a message to each peers
         let peers=node.getPeers()
-        sayHello(node,peers)
+        // sayHello(node,peers)
 
         sendBuffer(node,peers,filePath)
 
