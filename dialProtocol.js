@@ -80,11 +80,7 @@ function filesToBuffer(files){
     }
     return bufferArray
 }
-function filesToStream(file,stream){
-    pipe(
 
-    )
-}
 
 function pingPeers(peers){
     for(let i in peers){

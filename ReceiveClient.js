@@ -5,7 +5,7 @@ import {pipe} from "it-pipe";
 
 const filePath = './Data/To/'
 async function start() {
-    const node=await Node.createNode()
+    const node=await Node.createMdnsNode()
 
     //handler
     await node.handle('/chat/1.0.0', handler.handleTextStream)
@@ -15,27 +15,29 @@ async function start() {
     const protocols = ['/chat/1.0.0','/buffer/1.0.0']
 
     node.addEventListener('peer:discovery', (evt) => {
-        console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
+        console.log('Discovered %s', evt.detail.toString()) // Log discovered peer
     })
 
-    node.connectionManager.addEventListener('peer:connect', (evt) => {
-        const peer= evt.detail
-        const peerId=peer.remotePeer
+    node.addEventListener('peer:connect', (evt) => {
+        const peerId= evt.detail
+
         // console.log('the detail is ', evt.detail) // Log connected peer
-        console.log('Connected to %s', peer.remotePeer.toString()) // Log connected peer
+        console.log('Connected to %s', peerId) // Log connected peer
 
 
         //add peer to the peerStore
-        node.peerStore.protoBook.add(peerId,protocols)
-        // node.peerStore.addressBook.add(peerId, utils.getMultiaddr(evt.detail.remoteAddr))
-        node.peerStore.addressBook.add(peerId, [evt.detail.remoteAddr])
+        // node.peerStore.protoBook.add(peerId,protocols)// node.peerStore.addressBook.add(peerId, utils.getMultiaddr(evt.detail.remoteAddr))
+        // node.peerStore.addressBook.add(peerId, [evt.detail.remoteAddr])
+        node.peerStore.patch(peerId,{
+            protocols:protocols
+        })
 
         let peers=node.getPeers()
 
     })
 
-    node.connectionManager.addEventListener('peer:disconnect', (evt) => {
-        console.log('Disconnected from %s', evt.detail.id.toString())
+    node.addEventListener('peer:disconnect', (evt) => {
+        console.log('Disconnected from %s', evt.detail.toString())
     })
 
 async function pingPeers(peers){
