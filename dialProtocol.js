@@ -37,40 +37,22 @@ function sendBuffer(node,peers,folderPath){
     // }
     // ###
 
-    // for(let i in peers){
-    //     node.dialProtocol(peers[i],['/stream/1.0.0']).then(function (stream){
-    //
-    //         pipe(
-    //             [utils.stringToUint8Array('my own protocol2, wow!')],
-    //             stream
-    //         )
-    //         // pipe(
-    //         //     fs.createReadStream(file),
-    //         //     stream.sink
-    //         //     // fs.createWriteStream('./Data/To')
-    //         //     // process.stdout("abc")
-    //         // )
-    //         //
-    //         //     // const fileStream = fs.createReadStream(folderPath+file);
-    //         //     // fileStream.on('data', (chunk) => {
-    //         //     //     stream.sink(chunk)
-    //         //     // })
-    //     })
-        // files.forEach((file)=>{
-        //     console.log("name of file is",file)
-        //
-        //
-        //
-        //     // Create a buffer to store the file data
-        //     // const chunks = [];
-        //     // fileStream.on('data', (chunk) => {
-        //     //     chunks.push(chunk);
-        //     // });
-        //     // fileStream.on('end', () => {
-        //     //     const data= Buffer.concat(chunks);
-        //     // })
-        // })
-    // }
+
+}
+async function sendSmallBuffer(node,peers,folderPath){
+    const files=utils.pathHandler(folderPath)
+
+    for await (let i in peers){
+        for await (let file_name of files){
+            const chunk= await fs.readFileSync(fromPath+file_name)
+            node.dialProtocol(peers[i],['/buffer/1.0.0']).then((stream)=>{
+                it.pipe(
+                    [utils.stringToUint8Array(file_name),chunk],
+                    stream
+                )
+            })
+        }
+    }
 }
 
 function filesToBuffer(files){

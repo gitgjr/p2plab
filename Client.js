@@ -13,6 +13,7 @@ async function start() {
     await node.handle('/chat/1.0.0', handler.handleTextStream)
     await node.handle('/buffer/1.0.0', handler.handleBufferStream)
 
+
     //protocols of the node
     const protocols = ['/chat/1.0.0','/buffer/1.0.0']
 
@@ -43,9 +44,9 @@ async function start() {
 
         //send a message to each peers
         let peers=node.getPeers()
-        sayHello(node,peers)
+        // sayHello(node,peers)
 
-        // sendBuffer(node,peers,filePath)
+        sendBuffer(node,peers,filePath)
 
     })
 

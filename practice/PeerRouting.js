@@ -6,11 +6,8 @@ import { tcp } from '@libp2p/tcp'
 import { mplex } from '@libp2p/mplex'
 import { yamux } from '@chainsafe/libp2p-yamux'
 import { noise } from '@chainsafe/libp2p-noise'
-import { CID,digest } from 'multiformats'
 import { kadDHT } from '@libp2p/kad-dht'
-import all from 'it-all'
 import delay from 'delay'
-
 
 const createNode = async () => {
         const node = await createLibp2p({
@@ -52,18 +49,11 @@ const createNode = async () => {
         node2.dial(node3.peerId)
     ])
 
-    // Wait for onConnect handlers in the DHT
+    // The DHT routing tables need a moment to populate
     await delay(1000)
 
-    const cid = CID.parse('QmTp9VkYvnHyrqKQuFPiuZkiX9gPcqj6x5LJ1rmWuSySnL')
-    await node1.contentRouting.provide(cid)
+    const peer = await node1.peerRouting.findPeer(node3.peerId)
 
-    console.log('Node %s is providing %s', node1.peerId.toString(), cid.toString())
-
-    // wait for propagation
-    await delay(300)
-
-    const providers = await all(node3.contentRouting.findProviders(cid, { timeout: 3000 }))
-
-    console.log('Found provider:', providers[0].id.toString())
+    console.log('Found it, multiaddrs are:')
+    peer.multiaddrs.forEach((ma) => console.log(ma.toString()))
 })()

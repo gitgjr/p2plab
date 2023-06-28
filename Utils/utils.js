@@ -99,7 +99,26 @@ function pathHandler(dir){
 function isString(value) {
     return typeof value === "string" || value instanceof String;
 }
+function searchFile(filaName,stationType){
+    //return a list of files that node has not maintained
+    return new Promise(function (resolve,reject){
+        // console.log(filaName)
+        let path="./relayData"
+        let judge=0
+        if (stationType=="sender"){
+            path="../Data/From"
+        }else{
+            path="../Data/To"
+        }
+        const fileList=pathHandler(path)
+        for (let i in fileList){
 
+        }
+        {
+
+        }
+    })
+}
 
 
 
