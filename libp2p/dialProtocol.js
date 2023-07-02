@@ -1,6 +1,6 @@
 import fs from 'fs'
 import * as it from "it-pipe";
-import utils from "./Utils/utils.js";
+import utils from "../Utils/utils.js";
 import { pipeline } from 'stream'
 
 const fromPath = './Data/From/'

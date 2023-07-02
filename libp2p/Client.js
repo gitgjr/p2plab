@@ -1,7 +1,7 @@
 
 import * as Node from "./libp2p.js"
 import * as handler from "./handler.js"
-import utils from "./Utils/utils.js";
+import utils from "../Utils/utils.js";
 import {pipe} from "it-pipe";
 import {sayHello, sendBuffer} from "./dialProtocol.js";
 

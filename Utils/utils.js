@@ -119,8 +119,13 @@ function searchFile(filaName,stationType){
         }
     })
 }
-
-
+function extractM3U8Files(fileList) {
+    return fileList.filter(fileName => fileName.endsWith('.m3u8'));
+}
+function getHLSObjectName(fileList) {
+    let m3u8FileName = extractM3U8Files(fileList)[0];
+    return m3u8FileName.split('.')[0];
+}
 
 export default {
     getTime,
@@ -129,6 +134,7 @@ export default {
     getMultiaddr,
     uint8ArrayToString,
     stringToUint8Array,
-    pathHandler
+    pathHandler,
+    getHLSObjectName
 }
 

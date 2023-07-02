@@ -1,6 +1,6 @@
 import fs from 'fs'
 import {pipe} from "it-pipe";
-import utils from "./Utils/utils.js";
+import utils from "../Utils/utils.js";
 import { Transform,Readable,Writable } from 'stream'
 
 const toPath = './Data/To/'

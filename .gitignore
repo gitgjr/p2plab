@@ -93,8 +93,8 @@ typings/
 新建文本文档.txt
 
 #Data
-Data/
-
+Data/From/
+Data/To/
 #Mac
 .DS_Store
 
