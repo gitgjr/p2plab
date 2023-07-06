@@ -12,9 +12,10 @@ async function CIDToJSON(CIDlist,HLSObjectName){
     await fs.writeFileSync(CIDPath+JsonFileName,JSONlist);
 }
 
-function getNeedCID(CIDList) {
+function readJsonFile(CIDList) {
     // Read JSON file
     const CIDJSONFileName = utils.pathHandler(CIDPath)
+
     let rawdata = fs.readFileSync(CIDPath+CIDJSONFileName[0]);
     // Compare with maintained CID
     let AllCID = JSON.parse(rawdata);
@@ -22,11 +23,11 @@ function getNeedCID(CIDList) {
         AllCID[i]=CID.parse(AllCID[i]['/'])
     }
     // Return needed CID
-    console.log(AllCID);
+    return AllCID // CIDList
 }
 
 function fromJson(json) {
     CID.parse(json['/'])
 }
 
-export {CIDToJSON,getNeedCID}
+export {CIDToJSON,readJsonFile}

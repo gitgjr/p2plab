@@ -11,5 +11,12 @@ async function addAllFiles(filePath){
     }
     return buffers
 }
+async function downloadFiles(CIDList){
+    for await (let CID of CIDList){
+        const writeable=fs.createWriteStream()
+        for await (const chunk of node.cat(CID)) {}
+    }
+}
+
 
 export {addAllFiles}
