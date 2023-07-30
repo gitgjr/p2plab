@@ -1,5 +1,6 @@
 import fs  from "fs";
 import M3U8FileParser from 'm3u8-file-parser';
+import {fromPath} from "../Path.js";
 function readM3U8(m3u8Path) {
     let tsFileList = []
 
@@ -12,9 +13,9 @@ function readM3U8(m3u8Path) {
         tsFileList.push(result['segments'][i]['url'])
     }
 
-    return tsFileList
+    return tsFileList //tsFileNameList
 }
-const filePath = './Data/From/'
+const filePath = fromPath
 const result = readM3U8(filePath + 'big.m3u8');
 
 

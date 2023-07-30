@@ -77,8 +77,8 @@ function stringToUint8Array(str){
 }
 
 function pathHandler(dir){
-    //return a array of names of files in a folder
-    let files=[]
+    //return an array of names of files in a folder
+    let files=[] //name array of file names
     if(isString(dir)){
         let stat=fs.lstatSync(dir)
         if(stat.isDirectory() ){
@@ -99,32 +99,19 @@ function pathHandler(dir){
 function isString(value) {
     return typeof value === "string" || value instanceof String;
 }
-function searchFile(filaName,stationType){
-    //return a list of files that node has not maintained
-    return new Promise(function (resolve,reject){
-        // console.log(filaName)
-        let path="./relayData"
-        let judge=0
-        if (stationType=="sender"){
-            path="../Data/From"
-        }else{
-            path="../Data/To"
-        }
-        const fileList=pathHandler(path)
-        for (let i in fileList){
-
-        }
-        {
-
-        }
-    })
+function searchFile(filaName,path){
+    const fileList=pathHandler(path)
+    return fileList.includes(filaName);
 }
 function extractM3U8Files(fileList) {
     return fileList.filter(fileName => fileName.endsWith('.m3u8'));
 }
 function getHLSObjectName(fileList) {
     let m3u8FileName = extractM3U8Files(fileList)[0];
-    return m3u8FileName.split('.')[0];
+    return m3u8FileName.split('.')[0] //name of the m3u8 file without extension
+}
+export function ByteToMB(size) {
+    return size / 1024 / 1024;
 }
 
 export default {
@@ -135,6 +122,7 @@ export default {
     uint8ArrayToString,
     stringToUint8Array,
     pathHandler,
-    getHLSObjectName
+    getHLSObjectName,
+    ByteToMB
 }
 
